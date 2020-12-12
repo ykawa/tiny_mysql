@@ -66,6 +66,7 @@ mkdir -p /run/mysqld /var/lib/mysql
 touch /usr/share/mariadb/mysql_test_db.sql
 chown -R mysql:mysql /etc/my.cnf.d /run/mysqld /var/lib/mysql /usr/share/mariadb/mysql_system_tables_data.sql
 
-# 一時ファイルを削除する
-rm -f /tmp/keep_file_list
+# 不要なファイルを削除する
+rm -rf /var/cache/* /var/log/* /var/tmp/* /tmp/*
+mkdir -p /var/cache/apk
 
