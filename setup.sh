@@ -9,7 +9,9 @@ generate_keep_file_list() {
     usr/bin/my_print_defaults
     usr/bin/mysql
     usr/bin/mysql_install_db
+    usr/bin/mariadb-install-db
     usr/bin/mysqld
+    usr/bin/mariadbd
     usr/share/mariadb/charsets/Index.xml
     usr/share/mariadb/charsets/README
     usr/share/mariadb/charsets/armscii8.xml
@@ -47,7 +49,7 @@ generate_keep_file_list() {
 }
 
 # mariadbパッケージを追加する
-apk add --no-cache mariadb mariadb-common
+apk add --no-cache mariadb mariadb-common mariadb-client
 
 # 残すファイルの一覧を生成する（ashはプロセス置換ができないので一時ファイルに保存する）
 generate_keep_file_list > /tmp/keep_file_list
@@ -63,8 +65,8 @@ sed -i -e 's/mysql:x:[0-9]*:[0-9]*:/mysql:x:'${MY_USER_ID:-100}':'${MY_GROUP_ID:
 
 # 必須ファイル＆ディレクトリ作成と所有者の変更をする
 mkdir -p /run/mysqld /var/lib/mysql
-touch /usr/share/mariadb/mysql_test_db.sql
-chown -R mysql:mysql /etc/my.cnf.d /run/mysqld /var/lib/mysql /usr/share/mariadb/mysql_system_tables_data.sql
+touch /usr/share/mariadb/mysql_test_db.sql /usr/share/mariadb/mysql_sys_schema.sql
+chown -R mysql:mysql /etc/my.cnf.d /run/mysqld /var/lib/mysql /usr/share/mariadb
 
 # 不要なファイルを削除する
 rm -rf /var/cache/* /var/log/* /var/tmp/* /tmp/*
