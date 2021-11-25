@@ -4,11 +4,13 @@ set -eo pipefail
 generate_config() {
   echo "
   [mysqld]
+  skip-networking = 0
   skip-bind-address
   skip-name-resolve
   skip-host-cache
   skip-slave-start
   skip-grant-tables
+  skip-character-set-client-handshake
 
   [mariadb]
   innodb_buffer_pool_size = 10M
